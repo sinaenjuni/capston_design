@@ -1,4 +1,4 @@
-package com.example.capstonewms.domain;
+package com.example.capstonewms.model;
 
 public class User {
     private String name;

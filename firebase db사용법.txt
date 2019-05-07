@@ -1,0 +1,36 @@
+            FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist")
+                    .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    //서버에서 넘어오는 데이터
+
+                    waitingList.clear(); //누적 제거거
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        waitingList.add(snapshot.getValue(WaitingModel.class));
+//                        waitingList.add(snapshot.getValue(WaitingModel.class));
+                        Log.e("count : ", waitingList.size() + "");
+
+                    }
+                    notifyDataSetChanged();
+
+                }
+
+
+
+
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist")
+                        .child(index)
+                        .setValue(new WaitingModel(index,"010" + "-" +
+                                (int)(Math.random()*(9999 - 1000 +1)) + "-" +
+                                (int)(Math.random()*(9999 - 1000 +1)) ,(int)(Math.random() * (10 - 1 +1)) + ""));
+}
+
