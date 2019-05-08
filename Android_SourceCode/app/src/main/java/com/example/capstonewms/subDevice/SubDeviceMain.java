@@ -48,15 +48,17 @@ public class SubDeviceMain extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_sub_device_main);
 
         textViewPhone = (TextView)findViewById(R.id.subDeviceMain_TextView_phone);
+        textViewPhone.setText("010-"); // 초기화
 
         textViewClear = (TextView)findViewById(R.id.subDeviceMain_TextView_clear);
+
         textViewClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tempStr = textViewPhone.getText().toString();
                 int length = tempStr.length();
                 if(!tempStr.equals("")) {
-                    if(tempStr.length() == 5 || tempStr.length() == 10) {
+                    if(tempStr.length() == 4 || tempStr.length() == 9) {
                         tempStr = tempStr.substring(0, length - 2);
                     } else {
                         tempStr = tempStr.substring(0, length - 1);
@@ -124,6 +126,7 @@ public class SubDeviceMain extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         int selButton = v.getId();
         int textPhonelength = textViewPhone.getText().length();
+
         switch (selButton){
             case R.id.subDeviceMain_TextView_number0:
                 textViewPhone.setText(textViewPhone.getText().toString() + "0");
@@ -157,12 +160,11 @@ public class SubDeviceMain extends AppCompatActivity implements View.OnClickList
                 break;
         }
 
-        if(textPhonelength == 2  || textPhonelength == 7) {
+        if(textPhonelength == 2 || textPhonelength == 7) {
             String tempStr = textViewPhone.getText().toString();
             tempStr = tempStr + "-";
             textViewPhone.setText(tempStr);
         }
-
 
         if(textPhonelength > 12) {
             Toast.makeText(SubDeviceMain.this, "올바른 전화번호가 아닙니다", Toast.LENGTH_SHORT).show();

@@ -130,50 +130,57 @@ public class SubDevicePeople extends AppCompatActivity implements View.OnClickLi
                 });
     }
 
+    public void checkRangeOverflow(String number, int text) {
+        if(text > 100) {
+            Toast.makeText(SubDevicePeople.this, "100명은 넘길수 없다.", Toast.LENGTH_LONG).show();
+            textViewWaitPeople.setText("100");
+            return;
+        } else if (number == "0" && Integer.toString(text).length() >= 3) {
+            text = Integer.parseInt(Integer.toString(text).substring(0, 2));
+            textViewWaitPeople.setText(text);
+        } else {
+            textViewWaitPeople.setText(text + number);
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
         int selButton = v.getId();
-        String text = textViewWaitPeople.getText().toString();
+        int text = Integer.parseInt(textViewWaitPeople.getText().toString());
 
         switch (selButton) {
             case R.id.subDeviceMain_TextView_number0:
-                textViewWaitPeople.setText(text + "0");
+                checkRangeOverflow("0", text);
                 break;
             case R.id.subDeviceMain_TextView_number1:
-                textViewWaitPeople.setText(text + "1");
+                checkRangeOverflow("1", text);
+                //textViewWaitPeople.setText(text + "1");
                 break;
             case R.id.subDeviceMain_TextView_number2:
-                textViewWaitPeople.setText(text + "2");
+                checkRangeOverflow("2", text);
                 break;
             case R.id.subDeviceMain_TextView_number3:
-                textViewWaitPeople.setText(text + "3");
+                checkRangeOverflow("3", text);
                 break;
             case R.id.subDeviceMain_TextView_number4:
-                textViewWaitPeople.setText(text + "4");
+                checkRangeOverflow("4", text);
                 break;
             case R.id.subDeviceMain_TextView_number5:
-                textViewWaitPeople.setText(text + "5");
+                checkRangeOverflow("5", text);
                 break;
             case R.id.subDeviceMain_TextView_number6:
-                textViewWaitPeople.setText(text + "6");
+                checkRangeOverflow("6", text);
                 break;
             case R.id.subDeviceMain_TextView_number7:
-                textViewWaitPeople.setText(text + "7");
+                checkRangeOverflow("7", text);
                 break;
             case R.id.subDeviceMain_TextView_number8:
-                textViewWaitPeople.setText(text + "8");
+                checkRangeOverflow("8", text);
                 break;
             case R.id.subDeviceMain_TextView_number9:
-                textViewWaitPeople.setText(text + "9");
+                checkRangeOverflow("9", text);
                 break;
         }
-
-        if(Integer.parseInt(text) > 100) {
-            Toast.makeText(SubDevicePeople.this, "100명은 넘길수 없다.", Toast.LENGTH_LONG).show();
-            textViewWaitPeople.setText("100");
-        }
-
-
     }
 }
