@@ -10,6 +10,13 @@
         >
 
         <Button
+            android:id="@+id/main_fragment_button_send"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SEND"/>
+
+        <Button
             android:id="@+id/main_fragment_button_add"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"

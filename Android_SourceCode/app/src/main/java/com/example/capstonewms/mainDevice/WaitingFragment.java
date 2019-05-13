@@ -29,6 +29,7 @@ public class WaitingFragment extends Fragment {
 
     List<WaitingModel> waitingList;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -49,6 +50,16 @@ public class WaitingFragment extends Fragment {
                         .setValue(new WaitingModel(index,"010" + "-" +
                                 (int)(Math.random()*(9999 - 1001 +1)) + "-" +
                                 (int)(Math.random()*(9999 - 1001 +1)) ,(int)(Math.random() * (10 - 1 +1)) + ""));
+            }
+        });
+
+        //좌측 상단 SEND 버튼
+        Button buttonSend = (Button) view.findViewById(R.id.main_fragment_button_send);
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uid = FirebaseAuth.getInstance().getUid();
+                //String WaitNumber = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child
             }
         });
 
@@ -204,6 +215,7 @@ public class WaitingFragment extends Fragment {
         private Button buttonWaiting;
         private Button buttonCall;
         private Button buttonDelete;
+        private Button buttonSend;
 
         public CustomViewHolder(final View view) {
             super(view);
@@ -215,6 +227,7 @@ public class WaitingFragment extends Fragment {
             buttonWaiting = (Button) view.findViewById(R.id.item_waiting_button_waiting);
             buttonCall = (Button) view.findViewById(R.id.item_waiting_button_call);
             buttonDelete = (Button) view.findViewById(R.id.item_waiting_button_delete);
+
 
         }
     }
