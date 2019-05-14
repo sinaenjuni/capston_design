@@ -1,19 +1,25 @@
 package com.example.capstonewms.mainDevice;
 
+import android.Manifest;
 import android.app.Fragment;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstonewms.R;
+import com.example.capstonewms.model.SMSFunction;
 import com.example.capstonewms.model.UserModel;
 import com.example.capstonewms.model.WaitingModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,12 +34,12 @@ import java.util.List;
 public class WaitingFragment extends Fragment {
 
     List<WaitingModel> waitingList;
-
+    SMSFunction sms = new SMSFunction();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_waiting, container, false);
+        final View view = inflater.inflate(R.layout.fragment_waiting, container, false);
 
         //우측 상단 +버튼
         Button addButton = (Button)view.findViewById(R.id.main_fragment_button_add);
@@ -58,8 +64,21 @@ public class WaitingFragment extends Fragment {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uid = FirebaseAuth.getInstance().getUid();
-                //String WaitNumber = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child
+                String WaitNumber = waitingList.get(0).getNum();
+                String people = waitingList.get(0).getPeople();
+                String phoneNumber = waitingList.get(0).getPhoneNumber();
+
+                phoneNumber = phoneNumber.replaceAll("-", "");
+
+                String Text = "대기인 : " + WaitNumber + "\n" + "인원 수 : " + people + "\n" + "전화번호 : " + phoneNumber;
+
+                //Toast.makeText(view.getContext(), "전화번호 : " + phoneNumber, Toast.LENGTH_SHORT).show();
+
+                sms.setSms(Text);
+                sms.setPhoneNo(phoneNumber);
+                sms.sendSMS(getActivity(), view.getContext(), phoneNumber, Text);
+
+                //Toast.makeText(view.getContext(), "WaitNumber : " + WaitNumber, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -78,7 +97,7 @@ public class WaitingFragment extends Fragment {
             waitingList = new ArrayList<>();
 
             String uid = FirebaseAuth.getInstance().getUid();
-            //FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("1").setValue(new WaitingModel("1","010-0000-0000","2"));
+            FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("1").setValue(new WaitingModel("1","010-3672-8544","2"));
             //FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("2").setValue(new WaitingModel("2","010-0000-0000","4"));
             //FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("3").setValue(new WaitingModel("3","010-0000-0000","5"));
             //FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("4").setValue(new WaitingModel("4","010-0000-0000","2"));
@@ -103,7 +122,6 @@ public class WaitingFragment extends Fragment {
 
                     }
                     notifyDataSetChanged();
-
                 }
 
 //            FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").addValueEventListener(new ValueEventListener() {
