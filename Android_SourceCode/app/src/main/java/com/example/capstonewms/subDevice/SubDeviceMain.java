@@ -84,9 +84,16 @@ public class SubDeviceMain extends AppCompatActivity implements View.OnClickList
         textViewEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent(SubDeviceMain.this, SubDevicePeople.class);
-                intent.putExtra("phone",  textViewPhone.getText().toString());
-                startActivity(intent);
+                String tempStr = textViewPhone.getText().toString();
+                if(tempStr.length() != 13) {
+                    Toast.makeText(SubDeviceMain.this, "전화번호를 바르게 입력해주세요.", Toast.LENGTH_SHORT).show();
+                } else {
+                    textViewPhone.setText("010-"); // 재초기화
+                    Intent intent = new Intent(SubDeviceMain.this, SubDevicePeople.class);
+                    intent.putExtra("phone", tempStr);
+                    startActivity(intent);
+
+                }
             }
         });
 
@@ -94,32 +101,26 @@ public class SubDeviceMain extends AppCompatActivity implements View.OnClickList
         String uid = FirebaseAuth.getInstance().getUid();
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist")
                 .addValueEventListener(new ValueEventListener() {
-                                           @Override
-                                           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                               //서버에서 넘어오는 데이터
-                                               waitingList.clear(); //누적 제거거
-                                               for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                                   waitingList.add(snapshot.getValue(WaitingModel.class));
-                                                   Log.e("count : ", waitingList.size() + "");
-                                               }
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //서버에서 넘어오는 데이터
+                        waitingList.clear(); //누적 제거
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            waitingList.add(snapshot.getValue(WaitingModel.class));
+                            Log.e("count : ", waitingList.size() + "");
+                        }
+                        runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            textViewPeople.setText(waitingList.size()+"");
+                        }
+                    });
+                    }
 
-                                               runOnUiThread(new Runnable() {
-                                                   @Override
-                                                   public void run() {
-                                                       textViewPeople.setText(waitingList.size()+"");
-                                                   }
-                                               });
-                                           }
-
-                                           @Override
-                                           public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                           }
-                                       });
-
-
-
-
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
     }
 
     @Override

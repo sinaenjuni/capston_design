@@ -34,12 +34,16 @@ import java.util.List;
 public class WaitingFragment extends Fragment {
 
     List<WaitingModel> waitingList;
-    SMSFunction sms = new SMSFunction();
+    SMSFunction smsFunction;
+    View thisFragmentView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_waiting, container, false);
+        thisFragmentView = view; //View가 전역변수면 별로 좋은것은 아니니 나중에 해결할것
+        smsFunction = new SMSFunction(view.getContext() ,getActivity());
 
         //우측 상단 +버튼
         Button addButton = (Button)view.findViewById(R.id.main_fragment_button_add);
@@ -47,7 +51,7 @@ public class WaitingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String uid = FirebaseAuth.getInstance().getUid();
-                String index = waitingList.size()+1 + "";
+                String index = waitingList.size() + 1 + "";
                 //FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist")
                 Log.e("index : ", index);
 
@@ -73,12 +77,12 @@ public class WaitingFragment extends Fragment {
                 String Text = "대기인 : " + WaitNumber + "\n" + "인원 수 : " + people + "\n" + "전화번호 : " + phoneNumber;
 
                 //Toast.makeText(view.getContext(), "전화번호 : " + phoneNumber, Toast.LENGTH_SHORT).show();
-
-                sms.setSms(Text);
-                sms.setPhoneNo(phoneNumber);
-                sms.sendSMS(getActivity(), view.getContext(), phoneNumber, Text);
-
-                //Toast.makeText(view.getContext(), "WaitNumber : " + WaitNumber, Toast.LENGTH_SHORT).show();
+                //
+                //                sms.setSms(Text);
+                //                sms.setPhoneNo(phoneNumber);
+                //                //sms.sendSMS(getActivity(), view.getContext(), phoneNumber, Text);
+                //
+                //                //Toast.makeText(view.getContext(), "WaitNumber : " + WaitNumber, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -89,7 +93,6 @@ public class WaitingFragment extends Fragment {
         return view;
     }
 
-
     private class WaitingFragmentRecyclerViewAdapter extends RecyclerView.Adapter {
 
         public WaitingFragmentRecyclerViewAdapter() {
@@ -97,7 +100,7 @@ public class WaitingFragment extends Fragment {
             waitingList = new ArrayList<>();
 
             String uid = FirebaseAuth.getInstance().getUid();
-            FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("1").setValue(new WaitingModel("1","010-3672-8544","2"));
+            FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("1").setValue(new WaitingModel("1","010-9268-1339","2"));
             //FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("2").setValue(new WaitingModel("2","010-0000-0000","4"));
             //FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("3").setValue(new WaitingModel("3","010-0000-0000","5"));
             //FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist").child("4").setValue(new WaitingModel("4","010-0000-0000","2"));
@@ -167,26 +170,47 @@ public class WaitingFragment extends Fragment {
             ((CustomViewHolder)viewHolder).textNum.setText(waitingList.get(i).getNum());
             ((CustomViewHolder)viewHolder).textPeople.setText(waitingList.get(i).getPeople());
             ((CustomViewHolder)viewHolder).textPhone.setText(waitingList.get(i).getPhoneNumber());
+
+            final String WaitNumber = waitingList.get(i).getNum();
+            final String people = waitingList.get(i).getPeople();
+            final String phoneNumber = waitingList.get(i).getPhoneNumber();
+
             ((CustomViewHolder)viewHolder).buttonWaiting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), num + "번째 대기 버튼 눌림", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), num + 1 + "번째 대기 상태 알림을 전송합니다.", Toast.LENGTH_SHORT).show();
+
                     Log.e(num + "번째 아이템 : ",
                             waitingList.get(num).getNum() + ", " +
                                     waitingList.get(num).getPeople() + ", " +
                                     waitingList.get(num).getPhoneNumber()
                             );
-                }
+
+                    String tempStr = "안녕하세요, 대기 안내입니다. \n" +
+                            "대기 순서 : " + WaitNumber + "\n" +
+                            "남은 대기 인원 : " + waitingList.size() + 1  + "\n" +
+                            "인원 수 : " + people + "\n" +
+                            "전화번호 : " + phoneNumber;
+
+                    smsFunction.sendSMS(waitingList.get(num).getPhoneNumber(), tempStr);
+            }
             });
             ((CustomViewHolder)viewHolder).buttonCall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), num + "번째 호출 버튼 눌림", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), num + 1 + "번째 대기를 호출합니다.", Toast.LENGTH_SHORT).show();
+
                     Log.e(num + "번째 아이템 : ",
                             waitingList.get(num).getNum() + ", " +
                                     waitingList.get(num).getPeople() + ", " +
                                     waitingList.get(num).getPhoneNumber()
                     );
+
+                    String tempStr = "안녕하세요, 호출 안내입니다.\n 바로 와주시기바랍니다.\n" +
+                            "대기 순서 : " + WaitNumber + "\n" +
+                            "인원 수 : " + people + "\n" +
+                            "전화번호 : " + phoneNumber;
+                    smsFunction.sendSMS(waitingList.get(num).getPhoneNumber(), tempStr);
                 }
             });
             ((CustomViewHolder)viewHolder).buttonDelete.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +218,7 @@ public class WaitingFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     String uid = FirebaseAuth.getInstance().getUid();
-                    Toast.makeText(v.getContext(), num + "번째 삭제 버튼 눌림", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), num + 1+ "번째 대기를 삭제하였습니다.", Toast.LENGTH_SHORT).show();
 
 
                     for(int i = num; i < waitingList.size() - 1  ; i++) {   //0

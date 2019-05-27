@@ -4,6 +4,7 @@ public class WaitingModel {
     public String num;
     public String phoneNumber;
     public String people;
+    public String sms;
 
     public WaitingModel() {
     }
@@ -14,9 +15,14 @@ public class WaitingModel {
         this.people = people;
     }
 
-    public String getNum() {
-        return num;
+    public WaitingModel(String num, String phoneNumber, String people, String sms) {
+        this.num = num;
+        this.phoneNumber = phoneNumber;
+        this.people = people;
+        this.sms = sms;
     }
+
+    public String getNum() { return num; }
 
     public void setNum(String num) {
         this.num = num;
@@ -37,4 +43,9 @@ public class WaitingModel {
     public void setPeople(String people) {
         this.people = people;
     }
+
+    public String getSms() { return sms; }
+
+    public void setSms(String sms) { this.sms = sms; }
+
 }

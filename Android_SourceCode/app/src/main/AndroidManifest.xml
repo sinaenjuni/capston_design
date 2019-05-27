@@ -7,15 +7,17 @@
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.WRITE_SMS"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".subDevice.SubDevicePeople"></activity>
+        <activity android:name=".subDevice.SubDevicePeople" />
         <activity android:name=".sign.SignActivity" />
         <activity android:name=".subDevice.SubDeviceMain" />
         <activity android:name=".mainDevice.MainDeviceMain" />
@@ -28,7 +30,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".mainDevice.AutoRunApp"
+            android:enabled="true"
+            android:exported="false"
+            android:label="SMSReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".model.SMSFunction"/>
     </application>
+
+
 
 
 </manifest>
