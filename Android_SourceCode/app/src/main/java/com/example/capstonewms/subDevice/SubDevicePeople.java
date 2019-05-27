@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstonewms.R;
+import com.example.capstonewms.model.MessageModel;
 import com.example.capstonewms.model.SMSFunction;
 import com.example.capstonewms.model.WaitingModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +33,7 @@ public class SubDevicePeople extends AppCompatActivity implements View.OnClickLi
     private TextView textViewClear;
     private TextView textViewWaitPeople;
     private List<WaitingModel> waitingList;
+    private List<MessageModel> messageList;
 
 
     private String[] textViewNumberString = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
@@ -107,22 +109,26 @@ public class SubDevicePeople extends AppCompatActivity implements View.OnClickLi
                 } else {
                     Toast.makeText(SubDevicePeople.this, "추가함", Toast.LENGTH_LONG).show();
 
-                    int waitingListSize = waitingList.size();
-
                     Intent intent = getIntent();
                     String phone = intent.getStringExtra("phone");
 
                     String tempStr = "정상적으로 대기가 등록되었습니다. \n" +
-                            "현재 대기 순서 : " + waitingListSize + 1 + "\n" +
+                            "현재 대기 순서 : " + (waitingList.size() + 1) + "\n" +
                             "인원 수 : " + textViewWaitPeople.getText() + "\n" +
                             "전화번호 : " + phone;
 
-                    //
+
+
                     //startActivity(new Intent(SubDevicePeople.this, SubDeviceMain.class));
 
                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist")
                             .child(waitingList.size()+1 + "")
                             .setValue(new WaitingModel((waitingList.size()+1) + "", phone, textViewWaitPeople.getText().toString(), tempStr));
+
+
+                    FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("smslist")
+                            .push()
+                            .setValue(new MessageModel(phone, tempStr));
 
                     finish();
                 }

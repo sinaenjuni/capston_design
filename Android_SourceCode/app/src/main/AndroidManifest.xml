@@ -42,6 +42,7 @@
         </receiver>
 
         <service android:name=".model.SMSFunction"/>
+        <service android:name=".mainDevice.SMSFunctionRestart"/>
     </application>
 
 
