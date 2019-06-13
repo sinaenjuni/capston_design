@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.capstonewms">
+
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning, InnerclassSeparator">
+        <activity android:name="com.example.CapstoneUserApp.subDevice.SubDevicePeople" />
+        <activity android:name="com.example.CapstoneUserApp.sign.SignActivity" />
+        <activity android:name="com.example.CapstoneUserApp.subDevice.SubDeviceMain" />
+        <activity android:name="com.example.CapstoneUserApp.mainDevice.MainDeviceMain" />
+        <activity android:name="com.example.CapstoneUserApp.deviceMenu.DeviceMenu" />
+        <activity android:name="com.example.CapstoneUserApp.login.LoginView" />
+        <activity android:name="com.example.CapstoneUserApp.SplashView">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="com.example.CapstoneUserApp.mainDevice.AutoRunService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="SMSReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.example.CapstoneUserApp.model.SMSFunction"/>
+        <service android:name="com.example.CapstoneUserApp.mainDevice.SMSFunctionRestart"/>
+    </application>
+
+
+
+
+</manifest>

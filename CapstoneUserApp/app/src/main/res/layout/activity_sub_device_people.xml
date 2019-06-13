@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.CapstoneUserApp.subDevice.SubDevicePeople">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:background="@color/design_default_color_primary"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:textSize="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="현재 대기 인원"/>
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_People"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"/>
+
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:textSize="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="팀"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="인원을 입력하세요."
+            android:textSize="30dp"
+            android:textAlignment="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:gravity="right"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:text="0"
+                android:textSize="50dp"
+                android:id="@+id/subDeviceMain_TextView_waitPeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:gravity="left"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="명"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number1"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1"/>
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number2"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2"/>
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number3"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number4"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4"/>
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number5"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5"/>
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number6"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="6"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number7"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="7"/>
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number8"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="8"/>
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number9"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="9"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_clear"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="C"/>
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_number0"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"/>
+
+                <TextView
+                    android:id="@+id/subDeviceMain_TextView_enter"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="확인"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
