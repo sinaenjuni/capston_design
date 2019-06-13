@@ -32,7 +32,7 @@
         </activity>
 
         <receiver
-            android:name=".mainDevice.AutoRunApp"
+            android:name=".mainDevice.AutoRunService"
             android:enabled="true"
             android:exported="false"
             android:label="SMSReceiver">

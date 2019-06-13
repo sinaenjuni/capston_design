@@ -221,7 +221,7 @@ public class WaitingFragment extends Fragment {
                     Toast.makeText(v.getContext(), num + 1+ "번째 대기를 삭제하였습니다.", Toast.LENGTH_SHORT).show();
 
 
-                    for(int i = num; i < waitingList.size() - 1  ; i++) {   //0
+                    for(int i = num; i < waitingList.size() - 1; i++) {   //0
                         Log.e(i + "번째 아이템 : ",
                                 waitingList.get(i).getNum() + ", " +
                                         waitingList.get(i).getPeople() + ", " +

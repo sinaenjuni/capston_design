@@ -111,20 +111,18 @@ public class SubDevicePeople extends AppCompatActivity implements View.OnClickLi
 
                     Intent intent = getIntent();
                     String phone = intent.getStringExtra("phone");
+                    String waitingsize = (waitingList.size() + 1 ) + "";
 
                     String tempStr = "정상적으로 대기가 등록되었습니다. \n" +
-                            "현재 대기 순서 : " + (waitingList.size() + 1) + "\n" +
+                            "현재 대기 순서 : " + waitingsize + "\n" +
                             "인원 수 : " + textViewWaitPeople.getText() + "\n" +
                             "전화번호 : " + phone;
-
-
 
                     //startActivity(new Intent(SubDevicePeople.this, SubDeviceMain.class));
 
                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("waitinglist")
                             .child(waitingList.size()+1 + "")
                             .setValue(new WaitingModel((waitingList.size()+1) + "", phone, textViewWaitPeople.getText().toString(), tempStr));
-
 
                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("smslist")
                             .push()

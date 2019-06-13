@@ -26,6 +26,8 @@ public class MainDeviceMain extends AppCompatActivity {
 
         getFragmentManager().beginTransaction().replace(R.id.main_framelayout, new WaitingFragment()).commit();
 
+        smsFunction = new SMSFunction(MainDeviceMain.this);
+
         //앱 실행으로 서비스를 킴, 메인 디바이스 전용 모드 진입시 호출
         if(SMSFunction.serviceIntent == null) {
             serviceIntent = new Intent(getApplicationContext(), SMSFunction.class);
@@ -40,7 +42,7 @@ public class MainDeviceMain extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if(serviceIntent != null) {
-            //stopService(serviceIntent);
+            stopService(serviceIntent);
             serviceIntent = null;
         }
     }

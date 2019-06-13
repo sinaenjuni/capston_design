@@ -31,20 +31,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SMSFunction extends Service {
-    MainDeviceMain mainActivity = new MainDeviceMain();
-
     private Context context;
     private Activity activity;
     private String phoneNumber;
     private String message;
     List<MessageModel> messageList;
+    List<WaitingModel> waitingList;
 
     //서비스 상태 파악하는 부분
     public static Intent serviceIntent = null;
 
     PendingIntent sentPI;
-
-    int check = 0;
 
     public SMSFunction() {
         //기본생성자는 비워두기
@@ -66,6 +63,7 @@ public class SMSFunction extends Service {
         Toast.makeText(getApplicationContext(), "WMS Service Load Complete!", Toast.LENGTH_SHORT).show();
 
         messageList = new ArrayList<>();
+        waitingList = new ArrayList<>();
 
         //Firebase 데이터 들어오는 것들에 대한 이벤트 리스너 생성
         //자동적으로 대기하고 데이터가 변화되면 onDataChange에서 변화 감지하고 SMS 전송
@@ -80,13 +78,17 @@ public class SMSFunction extends Service {
                         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SEND_SMS);
 
                         messageList.clear(); //누적된 제거
+                        waitingList.clear();
                         //child 싸그리 for문 돌려서 전부 받아오기
                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                             messageList.add(snapshot.getValue(MessageModel.class));
+                            waitingList.add(snapshot.getValue(WaitingModel.class));
                             Log.e("count : ", messageList.size() + "");
+                            Log.e("count : ", waitingList.size() + "");
                         }
 
-                        //List의 최초값을 확인, 안비어있을때만
+                        //List의 최초값을 확인, 안비어있을때만 실행
+                        //리스트 비어있는거 확인 안하면 NullPointerException 등장
                         if(!messageList.isEmpty()) {
                             message = messageList.get(0).getSms();
                             phoneNumber = messageList.get(0).getPhoneNumber();
@@ -120,6 +122,10 @@ public class SMSFunction extends Service {
     public void onDestroy() {
         super.onDestroy();
         serviceIntent = null;
+    }
+
+    public SMSFunction(Activity activity) {
+        this.activity = activity;
     }
 
     public SMSFunction(Context context, Activity activity) {
