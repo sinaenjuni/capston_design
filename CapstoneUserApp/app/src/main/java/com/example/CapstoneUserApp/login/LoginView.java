@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.CapstoneUserApp.deviceMenu.DeviceMenu;
 import com.example.CapstoneUserApp.mainDevice.MainDeviceMain;
 import com.example.CapstoneUserApp.sign.SignActivity;
 import com.example.capstonewms.R;
